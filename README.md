@@ -1,14 +1,16 @@
 # JSBooty
-JSBooty is a very light weight javascript - meant to be light reusable for small / medium projects
+JSBooty is a very light weight javascript - meant to be light reusable for small / medium projects.
 
-# Real Usages
+JSBooty will handle your dependencies among all your module and will load them in Background.
 
-JSBooty loads your modules / libraries with dependencies simply learn what you need to do:
+# Simple Usage
+
+Lets suppose we have two modules - POPOVER and PRODUCT, the PRODUCT module will load some content using POPOVER's methods / functions so its dependable.
 
 ````
-MYMODULE = {
+PRODUCT = {
     wrapper: '',
-    requires: [],
+    requires: ['POPOVER'], // It requires the POPOVER module
     options: {},
     
     init: function(wrapper, options)
@@ -18,13 +20,13 @@ MYMODULE = {
 }
 ````
 
-If MyModule is going to display some MODAL windows you should have some MODULE and you add to MYMODULE.requires the name of that module, for example:
+When you initiate the PRODUCT module, JSBooty will also load POPOVER module and all POPOVER dependencies, everything is done in the background. You should add all your dependencies to requires array of each module
 
 ````
-MYMODULE.require.push('MODAL_MODULE')
+MYMODULE.requires.push('MODAL_MODULE'); // Avoid doing this!
 ````
 
-Dont forget to update the app.js module stack:
+Dont forget to add your modules to the app.js module stack:
 
 ````
 # https://github.com/joshlopes/JSBooty/blob/master/app.js#L9
@@ -33,8 +35,6 @@ modules: [
     {file: '/path/to/your/module.js', module: 'MODAL_MODULE'},
 ],
 ````
-
-It will only load one time in BG process and after he loads all dependencies it initiates.
 
 # Advanced Usage
 
